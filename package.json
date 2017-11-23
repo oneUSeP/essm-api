@@ -28,7 +28,8 @@
     "@adonisjs/shield": "^1.0.4",
     "@adonisjs/validator": "^4.0.7",
     "mssql": "^3.3.0",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "youch": "^2.0.5"
   },
   "devDependencies": {},
   "autoload": {
