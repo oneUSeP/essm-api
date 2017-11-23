@@ -15,4 +15,10 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route.get('/', 'WelcomeController.index')
+
+Route.group('v1', () => {
+  // Authorization
+  Route.post('/auth/access-token', 'AuthController.accessToken')
+
+}).prefix('/v1')
