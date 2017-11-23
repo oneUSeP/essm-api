@@ -2,7 +2,7 @@
 const { HttpException } = use('node-exceptions')
 const AuthOperation = use('App/Operations/AuthOperation')
 
-const HrEmployee = use('App/Models/HrEmployee')
+const User = use('App/Models/User')
 
 class AuthController {
   /**
@@ -28,6 +28,21 @@ class AuthController {
     console.log(token)
 
     response.send({ data: { user, accessToken: token} })
+  }
+
+  async me({auth, request, response}) {
+    let userId = auth.user.id
+    let user = await User.find(userId)
+
+    if (!user) {
+      throw new HttpException('User not found.', HttpResponse.STATUS_NOT_FOUND)
+    }
+
+    let data = user.toJSON()
+
+    response.send({
+      data
+    })
   }
 }
 

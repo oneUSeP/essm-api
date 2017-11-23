@@ -21,6 +21,9 @@ Route.group('v1', () => {
   // Authorization
   Route.post('/auth/access-token', 'AuthController.accessToken')
 
+  //Me
+  Route.get('/me', 'AuthController.me').middleware(['auth:api'])
+
   // Tracks
   Route.post('/track', 'TrackController.save').middleware(['auth:api'])
   Route.put('/track', 'TrackController.update').middleware(['auth:api'])
