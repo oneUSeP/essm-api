@@ -25,7 +25,9 @@ class AuthController {
 
     let { token } = await auth.generate(user)
 
-    response.send({ data: { user, token: token} })
+    console.log(token)
+
+    response.send({ data: { user, accessToken: token} })
   }
 }
 

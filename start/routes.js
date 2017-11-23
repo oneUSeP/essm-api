@@ -21,4 +21,11 @@ Route.group('v1', () => {
   // Authorization
   Route.post('/auth/access-token', 'AuthController.accessToken')
 
+  // Tracks
+  Route.post('/track', 'TrackController.save').middleware(['auth:api'])
+  Route.put('/track', 'TrackController.update').middleware(['auth:api'])
+  Route.get('/track/:id', 'TrackController.show').middleware(['auth:api'])
+  Route.get('/tracks', 'TrackController.list')
+  Route.delete('/track/:id', 'TrackController.delete').middleware(['auth:api'])
+
 }).prefix('/v1')
