@@ -81,7 +81,7 @@ class AuthOperation extends Operation {
         //if no account, create one with respect to ES_Students and HR_Employees table
         let newUser = new User()
 
-        newUser.username = user.EmployeeID
+        newUser.username = user.EmployeeID || user.StudentNo
         newUser.email = user.Email || ''
         newUser.password = this.accountPassword
 
