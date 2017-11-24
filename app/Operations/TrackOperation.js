@@ -158,7 +158,9 @@ class TrackOperation extends Operation {
   async list() {
     try {
       if (this.count && this.page)
-        return await Track.query().orderBy('track_name', 'asc').paginate(this.page, this.count)
+        return await Database
+        .from('ES_Track')
+        .paginate(this.page, this.count)
     } catch (e) {
       this.addError(e.status, e.message)
 

@@ -82,7 +82,7 @@ class TrackController {
 
     let tracks = await op.list()
 
-    response.json({
+    response.send({
       data: { tracks }
     })
   }
