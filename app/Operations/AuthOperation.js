@@ -84,6 +84,7 @@ class AuthOperation extends Operation {
         newUser.username = user.EmployeeID || user.StudentNo
         newUser.email = user.Email || ''
         newUser.password = this.accountPassword
+        newUser.role = 'user'
 
         await newUser.save()
 
