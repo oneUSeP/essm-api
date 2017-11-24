@@ -160,6 +160,7 @@ class TrackOperation extends Operation {
       if (this.count && this.page)
         return await Database
         .from('ES_Track')
+        .orderBy('track_name', 'asc')
         .paginate(this.page, this.count)
     } catch (e) {
       this.addError(e.status, e.message)
