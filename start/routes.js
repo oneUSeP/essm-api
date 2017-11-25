@@ -31,4 +31,7 @@ Route.group('v1', () => {
   Route.get('/tracks', 'TrackController.list').middleware(['auth:api'])
   Route.delete('/track/:id', 'TrackController.delete').middleware(['auth:api'])
 
+  //Admissions
+  Route.get('/admissions', 'AdmissionController.list').middleware(['auth:api'])
+
 }).prefix('/v1')
