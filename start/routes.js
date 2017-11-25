@@ -34,4 +34,7 @@ Route.group('v1', () => {
   //Admissions
   Route.get('/admissions', 'AdmissionController.list').middleware(['auth:api'])
 
+  //Admissions
+  Route.get('/civilstatus', 'CivilStatusController.list').middleware(['auth:api'])
+
 }).prefix('/v1')
