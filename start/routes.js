@@ -40,10 +40,13 @@ Route.group('v1', () => {
   //Academic Year
   Route.get('/ayterms', 'EsAyTermController.list').middleware(['auth:api'])
 
-  //Academic Year
+  //Campus
   Route.get('/campuses', 'EsCampusController.list').middleware(['auth:api'])
 
-  //Academic Year
+  //Income Brackets
   Route.get('/incomebrackets', 'EsIncomeBracketController.list').middleware(['auth:api'])
+
+  //Strands
+  Route.get('/strands', 'EsStrandController.list').middleware(['auth:api'])
 
 }).prefix('/v1')
