@@ -1,7 +1,6 @@
 'use strict'
 
 const { HttpException } = use('node-exceptions')
-const AdmissionOperation = use('App/Operations/AdmissionOperation')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 
 const CivilStatus = use('App/Models/CivilStatus')
@@ -14,7 +13,7 @@ class CivilStatusController {
 
     try {
       if (count && page)
-        var admissions = await Database
+        var civilstatuses = await Database
         .from('CivilStatus')
         .paginate(page, count)
     } catch (e) {
@@ -24,7 +23,7 @@ class CivilStatusController {
     }
 
     response.send({
-      data: { admissions }
+      data: { civilstatuses }
     })
   }
 }

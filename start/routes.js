@@ -49,4 +49,7 @@ Route.group('v1', () => {
   //Strands
   Route.get('/strands', 'EsStrandController.list').middleware(['auth:api'])
 
+  //Strands
+  Route.get('/testingcenters', 'EsTestingCenterController.list').middleware(['auth:api'])
+
 }).prefix('/v1')

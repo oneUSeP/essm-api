@@ -1,7 +1,6 @@
 'use strict'
 
 const { HttpException } = use('node-exceptions')
-const AdmissionOperation = use('App/Operations/AdmissionOperation')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 
 const EsStrand = use('App/Models/EsStrand')
@@ -14,7 +13,7 @@ class EsStrandController {
 
     try {
       if (count && page)
-        var admissions = await Database
+        var strands = await Database
         .from('ES_Strand')
         .paginate(page, count)
     } catch (e) {
@@ -24,7 +23,7 @@ class EsStrandController {
     }
 
     response.send({
-      data: { admissions }
+      data: { strands }
     })
   }
 }
