@@ -141,7 +141,6 @@ class TrackOperation extends Operation {
 
         return false
       }
-      console.log(this.trackId)
       await Database
       .table('ES_Track')
       .where('track_id', ''+this.trackId)
