@@ -25,6 +25,7 @@ class AdmissionOperation extends Operation {
 
     this.page = null
     this.count = null
+    this.keyword = null
   }
 
   static get scenarios() {
@@ -156,6 +157,22 @@ class AdmissionOperation extends Operation {
         .from('ES_Admission')
         .orderBy('AppDate', 'desc')
         .paginate(this.page, this.count)
+    } catch (e) {
+      this.addError(e.status, e.message)
+
+      return false
+    }
+  }
+
+  async search() {
+    try {
+      if (this.keyword)
+        console.log(this.keyword)
+        return await Database
+        .from('ES_Admission')
+        .orderBy('AppDate', 'desc')
+        .whereRaw('LastName LIKE \'%'+this.keyword+'%\' OR FirstName LIKE \'%'+this.keyword+'%\'')
+        .paginate(1, 99)
     } catch (e) {
       this.addError(e.status, e.message)
 

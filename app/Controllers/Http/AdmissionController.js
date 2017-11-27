@@ -20,6 +20,19 @@ class AdmissionController {
       data: { admissions }
     })
   }
+
+  async search ({request, response}) {
+    let op = new AdmissionOperation()
+    let { keyword } = request.all()
+
+    op.keyword = keyword
+
+    let admissions = await op.search()
+
+    response.send({
+      data: { admissions }
+    })
+  }
 }
 
 module.exports = AdmissionController
