@@ -57,4 +57,12 @@ Route.group('v1', () => {
   //Admission Interview Schedule
   Route.get('/interviews', 'EsAdmissionInterviewController.list').middleware(['auth:api'])
 
+  //Programs
+  Route.get('/programs', 'EsProgramController.list').middleware(['auth:api'])
+
+  //Discipline Majors
+  Route.get('/majors', 'EsDisciplineMajorController.list').middleware(['auth:api'])
+
+  //Program Majors
+  Route.get('/pmajors', 'EsProgramMajorController.list').middleware(['auth:api'])
 }).prefix('/v1')
