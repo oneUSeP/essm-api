@@ -261,7 +261,7 @@ class AdmissionOperation extends Operation {
         return await Database
         .from('ES_Admission')
         .orderBy('AppDate', 'desc')
-        .whereRaw('LastName LIKE \'%'+this.keyword+'%\' OR FirstName LIKE \'%'+this.keyword+'%\'')
+        .whereRaw('LastName LIKE \'%'+this.keyword+'%\' OR FirstName LIKE \'%'+this.keyword+'%\' OR AppNo LIKE \'%'+this.keyword+'%\' OR Email LIKE \'%'+this.keyword+'%\' OR TelNo LIKE \'%'+this.keyword+'%\'')
         .paginate(1, 99)
     } catch (e) {
       this.addError(e.status, e.message)
