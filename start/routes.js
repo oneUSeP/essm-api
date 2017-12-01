@@ -54,4 +54,7 @@ Route.group('v1', () => {
   //Strands
   Route.get('/testingcenters', 'EsTestingCenterController.list').middleware(['auth:api'])
 
+  //Admission Interview Schedule
+  Route.get('/interviews', 'EsAdmissionInterviewController.list').middleware(['auth:api'])
+
 }).prefix('/v1')
