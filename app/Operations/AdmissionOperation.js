@@ -278,12 +278,18 @@ class AdmissionOperation extends Operation {
             this.whereRaw('updated_at >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
           }
         })
+        .where(function () {
+          this.whereRaw('AppDate >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
+        })
         .whereRaw('LastName LIKE \'%'+this.keyword+'%\'')
         .paginate(1, 2210)
       } else if (this.keyword) {
         return await Database
         .from('ES_Admission')
         .orderBy('AppDate', 'desc')
+        .where(function () {
+          this.whereRaw('AppDate >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
+        })
         .whereRaw('LastName LIKE \'%'+this.keyword+'%\'')
         .paginate(1, 2210)
       }
