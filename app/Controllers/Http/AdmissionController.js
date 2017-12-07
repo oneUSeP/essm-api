@@ -71,6 +71,7 @@ class AdmissionController {
     op.grade11 = '' + request.input('grade11')
     op.grade12 = '' + request.input('grade12')
     op.testingCenter = '' + request.input('testingCenter')
+    op.isReqComplete = '' + request.input('isReqComplete')
 
     let admission = await op.update()
 
@@ -85,10 +86,9 @@ class AdmissionController {
 
   async search ({request, response}) {
     let op = new AdmissionOperation()
-    let { keyword } = request.all()
-
+    let { keyword, filter } = request.all()
     op.keyword = keyword
-
+    op.filter = filter
     let admissions = await op.search()
 
     response.send({

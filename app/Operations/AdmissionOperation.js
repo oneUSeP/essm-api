@@ -11,6 +11,9 @@ const HTTPResponse = use('App/Controllers/Http/HttpResponse')
 
 const Database = use('Database')
 
+const moment = require('moment-timezone')
+const _ = require('lodash')
+
 /**
  * Admission operation class
  *
@@ -26,6 +29,7 @@ class AdmissionOperation extends Operation {
     this.page = null
     this.count = null
     this.keyword = null
+    this.filter = null
   }
 
   static get scenarios() {
@@ -205,6 +209,8 @@ class AdmissionOperation extends Operation {
           Grade_11: this.grade11,
           Grade_12: this.grade12,
           ES_Test_Center: this.testingCenter,
+          is_reqcomplete: this.isReqComplete,
+          updated_at: moment().tz('Asia/Manila').format('YYYY-MM-DD HH:mm:ss'),
         })
       return await Database.table('ES_Admission').where('AppNo', this.appNo).first()
     } catch (e) {
@@ -257,12 +263,34 @@ class AdmissionOperation extends Operation {
 
   async search() {
     try {
-      if (this.keyword)
+      if (this.keyword && this.filter) {
+        let filters = this.filter.split(',')
         return await Database
         .from('ES_Admission')
         .orderBy('AppDate', 'desc')
-        .whereRaw('LastName LIKE \'%'+this.keyword+'%\' OR FirstName LIKE \'%'+this.keyword+'%\' OR AppNo LIKE \'%'+this.keyword+'%\' OR Email LIKE \'%'+this.keyword+'%\' OR TelNo LIKE \'%'+this.keyword+'%\'')
+        .where(function () {
+          if(filters.includes('is_reqcomplete')) {
+            this.where('is_reqcomplete', 1)
+          }
+        })
+        .where(function () {
+          if(filters.includes('updated_at')) {
+            this.whereRaw('updated_at >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
+          }
+        })
+        .whereRaw('LastName LIKE \'%'+this.keyword+'%\'')
         .paginate(1, 99)
+      } else if (this.keyword) {
+        return await Database
+        .from('ES_Admission')
+        .orderBy('AppDate', 'desc')
+        .whereRaw('LastName LIKE \'%'+this.keyword
+                  +'%\' OR FirstName LIKE \'%'+this.keyword
+                  +'%\' OR AppNo LIKE \'%'+this.keyword
+                  +'%\' OR Email LIKE \'%'+this.keyword
+                  +'%\' OR TelNo LIKE \'%'+this.keyword+'%\'')
+        .paginate(1, 99)
+      }
     } catch (e) {
       this.addError(e.status, e.message)
 
