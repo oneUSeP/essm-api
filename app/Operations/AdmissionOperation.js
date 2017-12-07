@@ -279,13 +279,13 @@ class AdmissionOperation extends Operation {
           }
         })
         .whereRaw('LastName LIKE \'%'+this.keyword+'%\'')
-        .paginate(1, 99)
+        .paginate(1, 2210)
       } else if (this.keyword) {
         return await Database
         .from('ES_Admission')
         .orderBy('AppDate', 'desc')
         .whereRaw('LastName LIKE \'%'+this.keyword+'%\'')
-        .paginate(1, 99)
+        .paginate(1, 2210)
       }
     } catch (e) {
       this.addError(e.status, e.message)
