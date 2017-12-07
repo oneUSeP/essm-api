@@ -265,12 +265,33 @@ class AdmissionOperation extends Operation {
     try {
       if (this.keyword && this.filter) {
         let filters = this.filter.split(',')
+        let keyword = this.keyword
         return await Database
         .from('ES_Admission')
         .orderBy('AppDate', 'desc')
         .where(function () {
           if(filters.includes('is_reqcomplete')) {
             this.where('is_reqcomplete', 1)
+          }
+        })
+        .where(function () {
+          if(filters.includes('Email')) {
+            this.whereRaw('Email LIKE \'%'+keyword+'%\'')
+          }
+        })
+        .where(function () {
+          if(filters.includes('FirstName')) {
+            this.whereRaw('FirstName LIKE \'%'+keyword+'%\'')
+          }
+        })
+        .where(function () {
+          if(filters.includes('LastName')) {
+            this.whereRaw('LastName LIKE \'%'+keyword+'%\'')
+          }
+        })
+        .where(function () {
+          if(filters.includes('TelNo')) {
+            this.whereRaw('TelNo LIKE \'%'+keyword+'%\'')
           }
         })
         .where(function () {
@@ -281,7 +302,7 @@ class AdmissionOperation extends Operation {
         .where(function () {
           this.whereRaw('AppDate >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
         })
-        .whereRaw('LastName LIKE \'%'+this.keyword+'%\'')
+        // .whereRaw('LastName LIKE \'%'+this.keyword+'%\'')
         .paginate(1, 2210)
       } else if (this.keyword) {
         return await Database
@@ -290,7 +311,11 @@ class AdmissionOperation extends Operation {
         .where(function () {
           this.whereRaw('AppDate >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
         })
-        .whereRaw('LastName LIKE \'%'+this.keyword+'%\'')
+        .whereRaw('LastName LIKE \'%'+this.keyword
+                  +'%\' OR FirstName LIKE \'%'+this.keyword
+                  +'%\' OR AppNo LIKE \'%'+this.keyword
+                  +'%\' OR Email LIKE \'%'+this.keyword
+                  +'%\' OR TelNo LIKE \'%'+this.keyword+'%\'')
         .paginate(1, 2210)
       }
     } catch (e) {
