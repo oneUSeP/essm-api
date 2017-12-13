@@ -95,6 +95,24 @@ class AdmissionController {
       data: { admissions }
     })
   }
+
+  async delete({request, response}) {
+    let op = new AdmissionOperation()
+    let { appNo } = request.all()
+    op.appNo = appNo
+
+    let result = await op.delete()
+
+    if (result === false) {
+      let error = op.getFirstError()
+
+      throw new HttpException(error.message, error.code)
+    }
+
+    response.send({
+      data: { deleteSuccess: result }
+    })
+  }
 }
 
 module.exports = AdmissionController

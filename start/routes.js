@@ -35,6 +35,7 @@ Route.group('v1', () => {
   Route.get('/admissions', 'AdmissionController.list').middleware(['auth:api'])
   Route.get('/admissions/search', 'AdmissionController.search').middleware(['auth:api'])
   Route.put('/admission', 'AdmissionController.update').middleware(['auth:api'])
+  Route.delete('/admission/:appNo', 'AdmissionController.delete').middleware(['auth:api'])
 
   //Civil Status
   Route.get('/civilstatuses', 'CivilStatusController.list').middleware(['auth:api'])

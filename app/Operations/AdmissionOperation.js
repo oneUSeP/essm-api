@@ -324,6 +324,26 @@ class AdmissionOperation extends Operation {
       return false
     }
   }
+
+  async delete () {
+    try {
+      let record = await Admission.findBy('AppNo', this.appNo)
+
+      if (!record) {
+        this.addError(HTTPResponse.STATUS_NOT_FOUND, 'Admission record not found.')
+
+        return false
+      }
+
+      await record.delete()
+
+      return true
+    } catch(e) {
+      this.addError(e.status, e.message)
+
+      return false
+    }
+   }
 }
 
 module.exports = AdmissionOperation
