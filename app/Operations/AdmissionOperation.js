@@ -327,17 +327,24 @@ class AdmissionOperation extends Operation {
 
   async delete () {
     try {
-      let record = await Admission.findBy('AppNo', this.appNo)
+      if(this.appNo){
+        let admission = await Database.table('ES_Admission').where('appNo', this.appNo).first()
 
-      if (!record) {
-        this.addError(HTTPResponse.STATUS_NOT_FOUND, 'Admission record not found.')
+        if (!admission) {
+          this.addError(HTTPResponse.STATUS_NOT_FOUND, 'Admission record not found.')
 
-        return false
+          return false
+        }
+
+        const record = await Database
+        .table('ES_Admission')
+        .where('AppNo', this.appNo)
+        .delete()
+
+        if(record) {
+          return true
+        }
       }
-
-      await record.delete()
-
-      return true
     } catch(e) {
       this.addError(e.status, e.message)
 

@@ -96,10 +96,9 @@ class AdmissionController {
     })
   }
 
-  async delete({request, response}) {
+  async delete({request, response, params}) {
     let op = new AdmissionOperation()
-    let { appNo } = request.all()
-    op.appNo = appNo
+    op.appNo = params.appNo
 
     let result = await op.delete()
 
