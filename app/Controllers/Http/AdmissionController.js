@@ -9,10 +9,11 @@ const EsAdmission = use('App/Models/EsAdmission')
 class AdmissionController {
   async list ({request, response}) {
     let op = new AdmissionOperation()
-    let { page, count } = request.all()
+    let { page, count, filter } = request.all()
 
     op.page = page
     op.count = count
+    op.filter = filter
 
     let admissions = await op.list()
 

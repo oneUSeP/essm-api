@@ -249,7 +249,27 @@ class AdmissionOperation extends Operation {
 
   async list() {
     try {
-      if (this.count && this.page)
+      if (this.count && this.page && this.filter) {
+        let filters = this.filter.split(',')
+        return await Database
+        .from('ES_Admission')
+        .orderBy('AppDate', 'desc')
+        .where(function () {
+          if(filters.includes('is_reqcomplete')) {
+            this.where('is_reqcomplete', 1)
+          }
+        })
+        .where(function () {
+          if(filters.includes('updated_at')) {
+            this.whereRaw('updated_at >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
+          }
+        })
+        .where(function () {
+          this.whereRaw('AppDate >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
+        })
+        .paginate(this.page, this.count)
+      }
+      else if (this.count && this.page)
         return await Database
         .from('ES_Admission')
         .orderBy('AppDate', 'desc')
