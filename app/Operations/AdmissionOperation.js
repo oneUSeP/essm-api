@@ -252,6 +252,8 @@ class AdmissionOperation extends Operation {
       if (this.count && this.page && this.filter) {
         let filters = this.filter.split(',')
         return await Database
+        .select('*')
+        .select('Grade_12 as Total_Grade')
         .from('ES_Admission')
         .orderBy('AppDate', 'desc')
         .where(function () {
