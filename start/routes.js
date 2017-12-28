@@ -69,4 +69,5 @@ Route.group('v1', () => {
 
   //Admission Testing
   Route.get('/scheds', 'AdmissionTestingController.list').middleware(['auth:api'])
+  Route.get('/scheds/count', 'AdmissionTestingController.count').middleware(['auth:api'])
 }).prefix('/v1')

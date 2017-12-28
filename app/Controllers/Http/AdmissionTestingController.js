@@ -25,6 +25,20 @@ class AdmissionTestingController {
       data: { scheds }
     })
   }
+
+  async count ({request, response}) {
+    let { testingSchedID } = request.all()
+
+    if (testingSchedID) {
+      var count = await Database
+        .from('ES_Admission')
+        .where('TermID', 171)
+        .where('TestingSchedID', testingSchedID)
+        .count('* as actual')
+    }
+
+    response.send({data : count[0].actual})
+  }
 }
 
 module.exports = AdmissionTestingController
