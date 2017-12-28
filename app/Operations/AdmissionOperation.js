@@ -210,6 +210,7 @@ class AdmissionOperation extends Operation {
           Grade_12: this.grade12,
           ES_Test_Center: this.testingCenter,
           is_reqcomplete: this.isReqComplete,
+          TestingSchedID: this.testingSched,
           updated_at: moment().tz('Asia/Manila').format('YYYY-MM-DD HH:mm:ss'),
         })
       return await Database.table('ES_Admission').where('AppNo', this.appNo).first()

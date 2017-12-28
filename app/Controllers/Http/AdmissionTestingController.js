@@ -42,7 +42,7 @@ class AdmissionTestingController {
         .count('* as actual')
     }
 
-    response.send({data : {count: count[0].actual, sched: sched}})
+    response.send({data : {count: count[0].actual, sched: sched[0]}})
   }
 }
 

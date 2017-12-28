@@ -73,7 +73,7 @@ class AdmissionController {
     op.grade12 = '' + request.input('grade12')
     op.testingCenter = '' + request.input('testingCenter')
     op.isReqComplete = '' + request.input('isReqComplete')
-    op.isSched = '' + request.input('isSched')
+    op.testingSched = '' + request.input('testingSched')
 
     let admission = await op.update()
 
