@@ -30,6 +30,11 @@ class AdmissionTestingController {
     let { testingSchedID } = request.all()
 
     if (testingSchedID) {
+      var sched = await Database
+        .from('ES_AdmissionTesting')
+        .where('TermID', 171)
+        .where('IndexID', testingSchedID)
+
       var count = await Database
         .from('ES_Admission')
         .where('TermID', 171)
@@ -37,7 +42,7 @@ class AdmissionTestingController {
         .count('* as actual')
     }
 
-    response.send({data : count[0].actual})
+    response.send({data : {count: count[0].actual, sched: sched}})
   }
 }
 
