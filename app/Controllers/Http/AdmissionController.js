@@ -4,8 +4,6 @@ const { HttpException } = use('node-exceptions')
 const AdmissionOperation = use('App/Operations/AdmissionOperation')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 
-const EsAdmission = use('App/Models/EsAdmission')
-
 class AdmissionController {
   async list ({request, response}) {
     let op = new AdmissionOperation()

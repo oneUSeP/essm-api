@@ -3,8 +3,6 @@
 const { HttpException } = use('node-exceptions')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 
-const EsStrand = use('App/Models/EsStrand')
-
 const Database = use('Database')
 
 class EsStrandController {
@@ -14,7 +12,7 @@ class EsStrandController {
     try {
       if (count && page)
         var strands = await Database
-        .from('ES_Strand')
+        .connection('es').from('ES_Strand')
         .paginate(page, count)
     } catch (e) {
       this.addError(e.status, e.message)

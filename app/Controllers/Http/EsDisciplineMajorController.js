@@ -3,8 +3,6 @@
 const { HttpException } = use('node-exceptions')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 
-const EsDisciplineMajor = use('App/Models/EsDisciplineMajor')
-
 const Database = use('Database')
 
 class EsDisciplineMajorController {
@@ -14,7 +12,7 @@ class EsDisciplineMajorController {
     try {
       if (count && page)
         var majors = await Database
-        .from('ES_DisciplineMajors')
+        .connection('es').from('ES_DisciplineMajors')
         .paginate(page, count)
     } catch (e) {
       this.addError(e.status, e.message)

@@ -17,64 +17,14 @@ module.exports = {
 
   /*
   |--------------------------------------------------------------------------
-  | Sqlite
+  | MSSQL
   |--------------------------------------------------------------------------
   |
-  | Sqlite is a flat file database and can be good choice under development
-  | environment.
   |
-  | npm i --save sqlite3
+  | npm i --save mssql@3.3.1
   |
   */
-  sqlite: {
-    client: 'sqlite3',
-    connection: {
-      filename: Helpers.databasePath('development.sqlite')
-    },
-    useNullAsDefault: true
-  },
 
-  /*
-  |--------------------------------------------------------------------------
-  | MySQL
-  |--------------------------------------------------------------------------
-  |
-  | Here we define connection settings for MySQL database.
-  |
-  | npm i --save mysql
-  |
-  */
-  mysql: {
-    client: 'mysql',
-    connection: {
-      host: Env.get('DB_HOST', 'localhost'),
-      port: Env.get('DB_PORT', ''),
-      user: Env.get('DB_USER', 'root'),
-      password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', 'adonis')
-    }
-  },
-
-  /*
-  |--------------------------------------------------------------------------
-  | PostgreSQL
-  |--------------------------------------------------------------------------
-  |
-  | Here we define connection settings for PostgreSQL database.
-  |
-  | npm i --save pg
-  |
-  */
-  pg: {
-    client: 'pg',
-    connection: {
-      host: Env.get('DB_HOST', 'localhost'),
-      port: Env.get('DB_PORT', ''),
-      user: Env.get('DB_USER', 'root'),
-      password: Env.get('DB_PASSWORD', ''),
-      database: Env.get('DB_DATABASE', 'adonis')
-    }
-  },
   mssql: {
     client: 'mssql',
     connection: {
@@ -83,6 +33,16 @@ module.exports = {
       user: Env.get('DB_USER', 'root'),
       password: Env.get('DB_PASSWORD', ''),
       database: Env.get('DB_DATABASE', 'adonis')
+    }
+  },
+  es: {
+    client: 'mssql',
+    connection: {
+      host: Env.get('DB_HOST', 'localhost'),
+      port: Env.get('DB_PORT', '1433'),
+      user: Env.get('DB_USER', 'root'),
+      password: Env.get('DB_PASSWORD', ''),
+      database: Env.get('DB_DATABASE_ES', 'adonis')
     }
   }
 }

@@ -3,8 +3,6 @@
 const { HttpException } = use('node-exceptions')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 
-const EsIncomeBracket = use('App/Models/EsIncomeBracket')
-
 const Database = use('Database')
 
 class EsIncomeBracketController {
@@ -14,7 +12,7 @@ class EsIncomeBracketController {
     try {
       if (count && page)
         var incomebrackets = await Database
-        .from('ES_IncomeBracket')
+        .connection('es').from('ES_IncomeBracket')
         .paginate(page, count)
     } catch (e) {
       this.addError(e.status, e.message)

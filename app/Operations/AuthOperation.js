@@ -1,11 +1,11 @@
 'use strict'
 
 const Operation = use('App/Operations/Operation')
-const EsStudent = use('App/Models/EsStudent')
-const HrEmployee = use('App/Models/HrEmployee')
 const User = use('App/Models/User')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 const Hash = use('Hash')
+
+const Database = use('Database')
 
 /**
  * Operations for Authenticating the user
@@ -55,10 +55,10 @@ class AuthOperation extends Operation {
     }
 
     try {
-      let user = await HrEmployee.find(this.accountID)
+      let user = await Database.connection('es').table('HR_Employees').where('EmployeeID', this.accountID).first()
 
       if (!user) {
-        user = await EsStudent.find(this.accountID)
+        user = await Database.connection('es').table('ES_Students').where('StudentNo', this.accountID).first()
 
         if (!user) {
           this.addError(HttpResponse.STATUS_NOT_FOUND, 'Account does not exist.')

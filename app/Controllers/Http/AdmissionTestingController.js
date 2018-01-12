@@ -12,7 +12,7 @@ class AdmissionTestingController {
     try {
       if (count && page)
         var scheds = await Database
-        .from('ES_AdmissionTesting')
+        .connection('es').from('ES_AdmissionTesting')
         .where('TermID', 171)
         .paginate(page, count)
     } catch (e) {
@@ -31,12 +31,12 @@ class AdmissionTestingController {
 
     if (testingSchedID) {
       var sched = await Database
-        .from('ES_AdmissionTesting')
+        .connection('es').from('ES_AdmissionTesting')
         .where('TermID', 171)
         .where('IndexID', testingSchedID)
 
       var count = await Database
-        .from('ES_Admission')
+        .connection('es').from('ES_Admission')
         .where('TermID', 171)
         .where('TestingSchedID', testingSchedID)
         .count('* as actual')

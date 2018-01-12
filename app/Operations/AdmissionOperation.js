@@ -3,9 +3,6 @@
 // Operations
 const Operation = use('App/Operations/Operation')
 
-// Models
-const Admission = use('App/Models/EsAdmission')
-
 // Utils
 const HTTPResponse = use('App/Controllers/Http/HttpResponse')
 
@@ -149,7 +146,7 @@ class AdmissionOperation extends Operation {
       return false
     }
 
-    let record = await Database.table('ES_Admission').where('AppNo', this.appNo).first()
+    let record = await Database.connection('es').table('ES_Admission').where('AppNo', this.appNo).first()
 
     if (!record) {
       this.addError(HTTPResponse.STATUS_NOT_FOUND, 'Admission not found.')
@@ -159,6 +156,7 @@ class AdmissionOperation extends Operation {
 
     try {
       await Database
+        .connection('es')
         .table('ES_Admission')
         .where('AppNo', this.appNo)
         .update({
@@ -213,7 +211,7 @@ class AdmissionOperation extends Operation {
           TestingSchedID: this.testingSched,
           updated_at: moment().tz('Asia/Manila').format('YYYY-MM-DD HH:mm:ss'),
         })
-      return await Database.table('ES_Admission').where('AppNo', this.appNo).first()
+      return await Database.connection('es').table('ES_Admission').where('AppNo', this.appNo).first()
     } catch (e) {
       this.addError(e.status, e.message)
 
@@ -228,7 +226,7 @@ class AdmissionOperation extends Operation {
    */
   async delete() {
     try {
-      let track = await Database.table('ES_Track').where('track_id', this.trackId).first()
+      let track = await Database.connection('es').table('ES_Track').where('track_id', this.trackId).first()
 
       if (!track) {
         this.addError(HTTPResponse.STATUS_NOT_FOUND, 'Admission not found.')
@@ -253,6 +251,7 @@ class AdmissionOperation extends Operation {
       if (this.count && this.page && this.filter) {
         let filters = this.filter.split(',')
         return await Database
+        .connection('es')
         .select('*')
         .select('Grade_12 as Total_Grade')
         .from('ES_Admission')
@@ -274,7 +273,7 @@ class AdmissionOperation extends Operation {
       }
       else if (this.count && this.page)
         return await Database
-        .from('ES_Admission')
+        .connection('es').from('ES_Admission')
         .orderBy('AppDate', 'desc')
         .paginate(this.page, this.count)
     } catch (e) {
@@ -290,7 +289,7 @@ class AdmissionOperation extends Operation {
         let filters = this.filter.split(',')
         let keyword = this.keyword
         return await Database
-        .from('ES_Admission')
+        .connection('es').from('ES_Admission')
         .orderBy('AppDate', 'desc')
         .where(function () {
           if(filters.includes('is_reqcomplete')) {
@@ -329,7 +328,7 @@ class AdmissionOperation extends Operation {
         .paginate(1, 2210)
       } else if (this.keyword) {
         return await Database
-        .from('ES_Admission')
+        .connection('es').from('ES_Admission')
         .orderBy('AppDate', 'desc')
         .where(function () {
           this.whereRaw('AppDate >= ?', [moment('2017/01/01').format('YYYY-MM-DD')])
@@ -351,7 +350,7 @@ class AdmissionOperation extends Operation {
   async delete () {
     try {
       if(this.appNo){
-        let admission = await Database.table('ES_Admission').where('appNo', this.appNo).first()
+        let admission = await Database.connection('es').table('ES_Admission').where('appNo', this.appNo).first()
 
         if (!admission) {
           this.addError(HTTPResponse.STATUS_NOT_FOUND, 'Admission record not found.')
@@ -360,6 +359,7 @@ class AdmissionOperation extends Operation {
         }
 
         const record = await Database
+        .connection('es')
         .table('ES_Admission')
         .where('AppNo', this.appNo)
         .delete()

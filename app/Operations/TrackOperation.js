@@ -3,9 +3,6 @@
 // Operations
 const Operation = use('App/Operations/Operation')
 
-// Models
-const Track = use('App/Models/EsTrack')
-
 // Utils
 const HTTPResponse = use('App/Controllers/Http/HttpResponse')
 
@@ -103,7 +100,7 @@ class TrackOperation extends Operation {
       return false
     }
 
-    let track = await Database.table('ES_Track').where('track_id', this.trackId).first()
+    let track = await Database.connection('es').table('ES_Track').where('track_id', this.trackId).first()
 
     if (!track) {
       this.addError(HTTPResponse.STATUS_NOT_FOUND, 'Track not found.')
@@ -119,7 +116,7 @@ class TrackOperation extends Operation {
           track_name: this.trackName,
           is_active: this.active
         })
-      return await Database.table('ES_Track').where('track_id', this.trackId).first()
+      return await Database.connection('es').table('ES_Track').where('track_id', this.trackId).first()
     } catch (e) {
       this.addError(e.status, e.message)
 
@@ -134,7 +131,7 @@ class TrackOperation extends Operation {
    */
   async delete() {
     try {
-      let track = await Database.table('ES_Track').where('track_id', this.trackId).first()
+      let track = await Database.connection('es').table('ES_Track').where('track_id', this.trackId).first()
 
       if (!track) {
         this.addError(HTTPResponse.STATUS_NOT_FOUND, 'Track not found.')
@@ -158,7 +155,7 @@ class TrackOperation extends Operation {
     try {
       if (this.count && this.page)
         return await Database
-        .from('ES_Track')
+        .connection('es').from('ES_Track')
         .orderBy('track_name', 'asc')
         .paginate(this.page, this.count)
     } catch (e) {

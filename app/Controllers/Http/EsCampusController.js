@@ -3,8 +3,6 @@
 const { HttpException } = use('node-exceptions')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 
-const EsCampus = use('App/Models/EsCampus')
-
 const Database = use('Database')
 
 class EsCampusController {
@@ -14,7 +12,7 @@ class EsCampusController {
     try {
       if (count && page)
         var campuses = await Database
-        .from('ES_Campus')
+        .connection('es').from('ES_Campus')
         .paginate(page, count)
     } catch (e) {
       this.addError(e.status, e.message)

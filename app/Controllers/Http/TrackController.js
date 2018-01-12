@@ -4,8 +4,6 @@ const { HttpException } = use('node-exceptions')
 const TrackOperation = use('App/Operations/TrackOperation')
 const HttpResponse = use('App/Controllers/Http/HttpResponse')
 
-const EsTrack = use('App/Models/EsTrack')
-
 class TrackController {
   async save({request, response}) {
     let op = new TrackOperation()
@@ -59,7 +57,7 @@ class TrackController {
 
   async show({request, response}) {
     let trackId = request.param('id')
-    let track = await EsTrack.findBy('id', trackId)
+    let track = await Database.connection('es').from('ES_Tracks').where('id', trackId).first()
 
 
     if (!track) {
